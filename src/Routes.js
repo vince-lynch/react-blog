@@ -5,19 +5,35 @@ import { createStore } from 'redux'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 import {Store} from './actions';
 import Home from './components/Home';
+import Page from './components/Page';
+import EditPage from './components/EditPage';
 
 const Routes = () => (
-	<Provider store={Store}>
 		<Router>
-			<Route path="/" exact
-						 render={(props) => (
-							 <div>
-								 <Home store={Store}></Home>
-							 </div>
-						 )}
-			/>
+			<div>
+				<Route path="/" exact
+							 render={(props) => (
+								 <div>
+									 <Home></Home>
+								 </div>
+							 )}
+				/>
+				<Route path="/:pageId" exact
+							 render={(props) => (
+								 <div>
+									 <Page passedProps={props}></Page>
+								 </div>
+							 )}
+				/>
+				<Route path="/:pageId/edit" exact
+							 render={(props) => (
+								 <div>
+									 <EditPage passedProps={props}></EditPage>
+								 </div>
+							 )}
+				/>
+			</div>
 		</Router>
-	</Provider>
 )
 
 
