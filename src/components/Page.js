@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import {fireBase} from '../config/firebase'
+import renderHTML from 'react-render-html';
+
 var currentState = {};
 
 function getPageFromFirebase(pageId){
@@ -17,15 +19,11 @@ function getPageFromFirebase(pageId){
 class Page extends Component {
 	constructor(props) {
 		super(props);
-		console.log('this.props', this.props);
 		this.state = {
 			page: {}
 		}
 	}
 	
-	stateUpdated(){
-		console.log('State updated', this.state)
-	}
 	
 	componentDidMount() {
 		getPageFromFirebase(this.props.passedProps.match.params.pageId)
@@ -34,20 +32,17 @@ class Page extends Component {
 					page
 				})
 			})
-		
-		console.log('!!!! -  this.state', this.state)
 	}
 	
 	
 	render() {
-		console.log('!!!! -  this.state', this.state)
 			if(this.state.page.hasOwnProperty('title')){
 			  const {page} = this.state;
 				return (
 					<div>
 						<h1>{page.title}</h1>
 						<div>
-							{page.content}
+							{renderHTML(page.content)}
 						</div>
 					</div>
 					)
