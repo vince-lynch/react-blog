@@ -1,7 +1,9 @@
 import {createStore} from "redux";
+import firebase from "firebase";
 
 var initialState = {
-	counter: 0
+	counter: 0,
+	user: {}
 }
 
 const storeReducers = {
@@ -13,7 +15,7 @@ const storeReducers = {
 const reducers = (state = initialState, action) => {
 	if(Object.keys(storeReducers).includes(action.substore)){
 		if(Object.keys(storeReducers[action.substore]).includes(action.type)){
-			return storeReducers[action.substore][action.type](state);
+			return storeReducers[action.substore][action.type](state, action);
 		} else if(action.type == 'REGISTER-ACTION') {
 			console.log('[STORE] - ACTION NOT FOUND REGISTERING', action.type);
 			storeReducers[action.substore][action.action] = action.reducer;
@@ -30,7 +32,35 @@ const reducers = (state = initialState, action) => {
 	} else {
 		console.log('[STORE] - ' + action.substore + ' substore not registered')
 	}
-
+	
 }
 
-export default createStore(reducers);
+const store = createStore(reducers);
+
+
+export function registerSubstore(nameOfSubstore){
+	store.dispatch({
+		type: 'REGISTER-SUBSTORE',
+		substore: nameOfSubstore.toUpperCase()
+	})
+}
+
+export function createSubstoreAction(nameOfSubstore, nameOfAction, actionFn){
+	store.dispatch({
+		substore: nameOfSubstore.toUpperCase(),
+		type: 'REGISTER-ACTION',
+		action: nameOfAction.toUpperCase(),
+		reducer: actionFn
+	})
+}
+
+export function dispatchSubstoreAction(nameOfSubstore, typeOfAction, payload){
+	store.dispatch({
+		substore: nameOfSubstore.toUpperCase(),
+		type: typeOfAction.toUpperCase(),
+		payload: payload
+	})
+}
+
+export const Store = store;
+

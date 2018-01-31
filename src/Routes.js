@@ -3,19 +3,18 @@ import PropTypes from 'prop-types'
 import { Provider } from 'react-redux';
 import { createStore } from 'redux'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
-import store from './actions';
-import App from './App';
-
+import {Store} from './actions';
+import Home from './components/Home';
 
 const Routes = () => (
-	<Provider store={store}>
+	<Provider store={Store}>
 		<Router>
 			<Route path="/" exact
-					 render={(props) => (
-						 <div>
-							 <App store={store}></App>
-						 </div>
-					 )}
+						 render={(props) => (
+							 <div>
+								 <Home store={Store}></Home>
+							 </div>
+						 )}
 			/>
 		</Router>
 	</Provider>
