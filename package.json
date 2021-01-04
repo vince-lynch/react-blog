@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "axios": "^0.17.1",
+    "axios": "^0.21.1",
     "draft-js": "^0.10.5",
     "draftjs-utils": "^0.8.8",
     "firebase": "^4.9.0",
